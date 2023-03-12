@@ -137,7 +137,9 @@ def play_game(answer):
             joined_answer = join_word(underscores_list) # Creates a word from the underscore list 
 
             #If the word is correct, print it and end the while loop
-            if joined_answer == game_answer and hang < 7:
+            if joined_answer == spaced_answer and hang < 7:
+                print(joined_answer)
+                print(" ")
                 print("You win!")
                 print("Answer: ", game_answer)
                 final = "Won"
@@ -205,14 +207,6 @@ def play_game(answer):
             
             Loading...
             """)
-        if stats == "N" or stats == "n":
-            print("Loading...") 
-    
-        continue_choice = input("Do you wish to continue? [Y/N] ")
-        if continue_choice == "Y" or continue_choice == "y":
-            continue 
-        if continue_choice =="N" or continue_choice =="n":
-            status = False
             print("""
                 EEEEE   N     N   DDD
                 E       N N   N   D   D
@@ -220,6 +214,16 @@ def play_game(answer):
                 E       N   N N   D   D
                 EEEEE   N     N   DDDD
             """)
+        if stats == "N" or stats == "n":
+            print("Loading...") 
+            print("""
+                EEEEE   N     N   DDD
+                E       N N   N   D   D
+                EEEEE   N  N  N   D    D
+                E       N   N N   D   D
+                EEEEE   N     N   DDDD
+            """)
+        break
 
 if __name__ == "__main__":
     answer_word = get_random_word()
