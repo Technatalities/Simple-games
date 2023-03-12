@@ -140,6 +140,7 @@ def play_game(answer):
             if joined_answer == game_answer and hang < 7:
                 print("You win!")
                 print("Answer: ", game_answer)
+                final = "Won"
                 break
 
             # If you use all the tries, you lose and it prints answer
@@ -147,6 +148,7 @@ def play_game(answer):
                 print("YOU DIED")
                 print_hangman_diagram(hang)
                 print("You Lose! The correct answer was", game_answer)
+                final = "died"
                 break
             
             elif hang < 7:
@@ -156,6 +158,8 @@ def play_game(answer):
                 print("Used letters:", used_letters) # Prints previously used letters
                 print(" ")
                 guess = input("Enter Letter: ").upper()
+                print(" ")
+                print(" ")
                 if len(guess) > 1:
                     print("Please only use 1 letter")
                     continue
@@ -191,12 +195,16 @@ def play_game(answer):
         
         # Option for players to view thier statisitcs
         stats = input("Do you wish to see your stats? [Y/N]: ")
+        print(" ")
         if stats == "Y" or stats =="y":
-            print("You took", guesscount, "guesses.")
-            print("You made", hang, "errors")
-            print("You got", correct, "letters correct")
-            print("")
-            print("Loading...")
+            print("You", final)
+            print(" ")
+            print("You guessed", guesscount, "times.")
+            print("You made", hang, "errors and got", correct, "letters correct")
+            print("""
+            
+            Loading...
+            """)
         if stats == "N" or stats == "n":
             print("Loading...") 
     
