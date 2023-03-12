@@ -122,6 +122,7 @@ def play_game(answer):
     correct = 0 # Number of correct answers
     wrong = 0 # Number of wrong answers 
     guesscount = 0 # Number of guesses
+    status = True
     
     spaced_answer = add_space(game_answer) # Spaces the abswer with add_space() function
     spaced_list = list(spaced_answer) # Creates a list from the spaced_answer
@@ -131,82 +132,86 @@ def play_game(answer):
 
     used_letters = [] # Initialises a list of used letters. Blank for now
 
-    while True:
-        joined_answer = join_word(underscores_list) # Creates a word from the underscore list 
+    while status:
+        while True:
+            joined_answer = join_word(underscores_list) # Creates a word from the underscore list 
 
-        #If the word is correct, print it and end the while loop
-        if joined_answer == game_answer and hang < 7:
-            print("You win!")
-            print("Answer: ", game_answer)
-            break
+            #If the word is correct, print it and end the while loop
+            if joined_answer == game_answer and hang < 7:
+                print("You win!")
+                print("Answer: ", game_answer)
+                break
 
-        # If you use all the tries, you lose and it prints answer
-        if hang == 7:
-            print("YOU DIED")
-            print_hangman_diagram(hang)
-            print("You Lose! The correct answer was", game_answer)
-            break
+            # If you use all the tries, you lose and it prints answer
+            if hang == 7:
+                print("YOU DIED")
+                print_hangman_diagram(hang)
+                print("You Lose! The correct answer was", game_answer)
+                break
+            
+            elif hang < 7:
+                print_hangman_diagram(hang) # Print the hangman diagram based on amount of errors
+                print(" ")
+                print(joined_answer) # Prints the _ and letter combo for guessing.
+                print("Used letters:", used_letters) # Prints previously used letters
+                print(" ")
+                guess = input("Enter Letter: ").upper()
+                if len(guess) > 1:
+                    print("Please only use 1 letter")
+                    continue
+                elif len(guess) == 1:
+            
+                    # If the letter is correct, display the letter and replcae the _'s. 
+                    # Add the letter used to the used letters list
+                    if guess in spaced_list and guess not in used_letters:
+                        hang += 0 
+                        correct += 1
+                        guesscount += 1
+                        used_letters.append(guess)
+                        index = find_index(spaced_list, guess)
+                        for i in index:
+                            underscores_list[i] = guess
+                        print("Correct")
+                        print("You have", 7 - hang, "errors remaining")
+
+                    # If the letter has already been used, do nothing and state it has been used.
+                    elif guess in used_letters:
+                        print("You hvae already used this letter.")
+                        print("You have", 7 - hang, "errors remaining")
+
+                    # If the letter is not correct, add an error count.
+                    # Add the letter used to the used letters list
+                    elif guess not in spaced_list and guess not in used_letters:
+                        hang += 1
+                        wrong += 1
+                        guesscount += 1 
+                        used_letters.append(guess)
+                        print("Wrong")
+                        print("You have", 7 - hang, "errors remaining")
         
-        elif hang < 7:
-            print_hangman_diagram(hang) # Print the hangman diagram based on amount of errors
-            print(joined_answer) # Prints the _ and letter combo for guessing.
-            print("Used letters:", used_letters) # Prints previously used letters
-            guess = input("Enter Letter: ").upper()
-            if len(guess) > 1:
-                print("Please only use 1 letter")
-                continue
-            elif len(guess) == 1:
-        
-                # If the letter is correct, display the letter and replcae the _'s. 
-                # Add the letter used to the used letters list
-                if guess in spaced_list and guess not in used_letters:
-                    hang += 0 
-                    correct += 1
-                    guesscount += 1
-                    used_letters.append(guess)
-                    index = find_index(spaced_list, guess)
-                    for i in index:
-                        underscores_list[i] = guess
-                    print("Correct")
-                    print("You have", 7 - hang, "errors remaining")
-
-                # If the letter has already been used, do nothing and state it has been used.
-                elif guess in used_letters:
-                    print("You hvae already used this letter.")
-                    print("You have", 7 - hang, "errors remaining")
-
-                # If the letter is not correct, add an error count.
-                # Add the letter used to the used letters list
-                elif guess not in spaced_list and guess not in used_letters:
-                    hang += 1
-                    wrong += 1
-                    guesscount += 1 
-                    used_letters.append(guess)
-                    print("Wrong")
-                    print("You have", 7 - hang, "errors remaining")
-
-    # Option for players to view thier statisitcs
-    stats = input("Do you wish to see your stats? [Y/N]: ")
-    if stats == "Y" or stats =="y":
-        print("You took", guesscount, "guesses.")
-        print("You made", hang, "errors")
-        print("You got", correct, "letters correct")
-        print("""
-        EEEEE   N     N   DDD
-        E       N N   N   D   D
-        EEEEE   N  N  N   D    D
-        E       N   N N   D   D
-        EEEEE   N     N   DDDD
-        """)
-    if stats == "N" or stats == "n":
-        print("""
-        EEEEE   N     N   DDD
-        E       N N   N   D   D
-        EEEEE   N  N  N   D    D
-        E       N   N N   D   D
-        EEEEE   N     N   DDDD
-        """)
-
+        # Option for players to view thier statisitcs
+        stats = input("Do you wish to see your stats? [Y/N]: ")
+        if stats == "Y" or stats =="y":
+            print("You took", guesscount, "guesses.")
+            print("You made", hang, "errors")
+            print("You got", correct, "letters correct")
+            print("")
+            print("Loading...")
+        if stats == "N" or stats == "n":
+            print("Loading...") 
+    
+        continue_choice = input("Do you wish to continue? [Y/N] ")
+        if continue_choice == "Y" or continue_choice == "y":
+            continue 
+        if continue_choice =="N" or continue_choice =="n":
+            status = False
+            print("""
+                EEEEE   N     N   DDD
+                E       N N   N   D   D
+                EEEEE   N  N  N   D    D
+                E       N   N N   D   D
+                EEEEE   N     N   DDDD
+            """)
 
 if __name__ == "__main__":
     answer_word = get_random_word()
