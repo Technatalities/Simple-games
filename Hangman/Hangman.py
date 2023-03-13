@@ -116,23 +116,22 @@ def print_hangman_diagram(hang):
     print(hangman_diagrams[hang])
 
 # Play the game :) 
-def play_game(answer):
-    game_answer = answer
-    hang = 0  # Hang is the number of errors you made
-    correct = 0 # Number of correct answers
-    wrong = 0 # Number of wrong answers 
-    guesscount = 0 # Number of guesses
+def play_game():
     status = True
-    
-    spaced_answer = add_space(game_answer) # Spaces the abswer with add_space() function
-    spaced_list = list(spaced_answer) # Creates a list from the spaced_answer
-
-    underscores = convert_to_underscore(spaced_answer) # Converts each spaced letter to underscrore 
-    underscores_list = list(underscores) # Creates a list of underscores
-
-    used_letters = [] # Initialises a list of used letters. Blank for now
-
     while status:
+        game_answer = get_random_word()
+        hang = 0  # Hang is the number of errors you made
+        correct = 0 # Number of correct answers
+        wrong = 0 # Number of wrong answers 
+        guesscount = 0 # Number of guesses
+        
+        spaced_answer = add_space(game_answer) # Spaces the abswer with add_space() function
+        spaced_list = list(spaced_answer) # Creates a list from the spaced_answer
+
+        underscores = convert_to_underscore(spaced_answer) # Converts each spaced letter to underscrore 
+        underscores_list = list(underscores) # Creates a list of underscores
+
+        used_letters = [] # Initialises a list of used letters. Blank for now
         while True:
             joined_answer = join_word(underscores_list) # Creates a word from the underscore list 
 
@@ -143,10 +142,9 @@ def play_game(answer):
                 print("You win!")
                 print("Answer: ", game_answer)
                 final = "Won"
-                break
 
             # If you use all the tries, you lose and it prints answer
-            if hang == 7:
+            elif hang == 7:
                 print("YOU DIED")
                 print_hangman_diagram(hang)
                 print("You Lose! The correct answer was", game_answer)
@@ -194,6 +192,7 @@ def play_game(answer):
                         used_letters.append(guess)
                         print("Wrong")
                         print("You have", 7 - hang, "errors remaining")
+                continue
         
         # Option for players to view thier statisitcs
         stats = input("Do you wish to see your stats? [Y/N]: ")
@@ -207,15 +206,12 @@ def play_game(answer):
             
             Loading...
             """)
-            print("""
-                EEEEE   N     N   DDD
-                E       N N   N   D   D
-                EEEEE   N  N  N   D    D
-                E       N   N N   D   D
-                EEEEE   N     N   DDDD
-            """)
+
         if stats == "N" or stats == "n":
             print("Loading...") 
+
+        cont_choice = input("Do you wish to continue: [Y/N] ")
+        if cont_choice =="N" or cont_choice == "n":
             print("""
                 EEEEE   N     N   DDD
                 E       N N   N   D   D
@@ -223,8 +219,9 @@ def play_game(answer):
                 E       N   N N   D   D
                 EEEEE   N     N   DDDD
             """)
-        break
+            break
+        if cont_choice == "Y" or cont_choice == "y":
+            continue
 
 if __name__ == "__main__":
-    answer_word = get_random_word()
-    play_game(answer_word)
+    play_game()
