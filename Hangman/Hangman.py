@@ -140,6 +140,7 @@ def play_game():
             print("You win!")
             print("Answer: ", game_answer)
             final = "Won"
+            break
 
         # If you use all the tries, you lose and it prints answer
         elif hang == 7:
