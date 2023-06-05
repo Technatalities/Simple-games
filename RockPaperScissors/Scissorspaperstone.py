@@ -20,7 +20,7 @@ def player_sym(p_no):
     return p_sym
 
 def bot_num():
-    b_no = random.randint(1,3)
+    b_no = random.randint(0,3)
     return b_no
 
 def bot_choice(b_no):
@@ -52,10 +52,11 @@ def play_rps(bot_num):
                 player = input("Rock, Paper, Scissors: ")
                 plr_num = player_num(player)
                 plr_sym = player_sym(plr_num)
+                bt_num = bot_num()
 
-                bt_choice = bot_choice(bot_num)
+                bt_choice = bot_choice(bt_num)
 
-                result = plr_num- bot_num
+                result = plr_num - bt_num
                 if result == -2 or result == 1:
                     f_result = "You Lose!"
                 elif result == -1 or result == 2:

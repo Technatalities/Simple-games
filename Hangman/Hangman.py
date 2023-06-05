@@ -1,13 +1,12 @@
-# Importing modules
+
 import random
 import re
 
-# Getting random words from the dictionary file. 
 def get_random_word():
     with open("Hangman/hangmandict.txt") as dictionary: 
         words = dictionary.readlines()
     random_string = random.choice(words).strip() 
-    random_word = random_string.upper()     # Converts the word to all uppercase
+    random_word = random_string.upper()   
     return random_word 
 
 
@@ -204,7 +203,7 @@ def play_game():
         
         Loading...
         """)
-    elif stats == "N" or stats == "n":
+    else:
         print("Loading...") 
     
 
@@ -218,6 +217,8 @@ def play_game():
             EEEEE   N     N   DDDD
         """)
     elif cont_choice == "Y" or cont_choice == "y":
+        play_game()
+    else:
         play_game()
 
 if __name__ == "__main__":
